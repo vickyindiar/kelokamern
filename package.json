@@ -1,0 +1,38 @@
+{
+  "name": "mernapi",
+  "version": "1.0.0",
+  "description": "learn mern purpose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node backend",
+    "server": "nodemon --exec babel-node backend",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seed:import": "nodemon --exec babel-node backend/seeder",
+    "seed:destroy": "nodemon --exec babel-node backend/seeder -d"
+  },
+  "author": "vicky indiarto",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.10",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/node": "^7.12.6",
+    "@babel/preset-env": "^7.12.7",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
+  }
+}

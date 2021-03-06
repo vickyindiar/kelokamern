@@ -1,0 +1,43 @@
+
+{root.api}/{version}/{grouping}/{endpoint}
+http://localhost:4000/v1/master/products
+
+Standar Status Response
+
+200 - OK                    - Call API Success
+201 - CREATED               - Post Success
+400 - BAD REQUEST           - Error on client side (wrong input)
+401 - UNAUTHORIZED          - User not authorized
+403 - FORBIDDEN             - User not allowed access
+404 - NOT FOUND             - Request End Point not FOUND
+500 - INTERNAL SERVER ERROR - Error on Server side
+502 - BAD GATEWAY           - Invalid response from another request
+
+
+GROUP: Authentication
+[1] - Register
+    URI : {root.api}/{version}/auth/register
+    REQ : 
+    {
+        name : 'test',
+        email : 'test@test.com',
+        password: '*****'
+    }
+    RES:
+    {
+        message: 'register success',
+        data : {
+            id: 1,
+            name: 'test',
+            email: 'test@test.com'
+        }
+    }
+    ERR-RES:
+    {
+        status : 400,
+        message: 'Data yang dimasukin salah !'
+    }
+[2] - Login
+
+GROUP: Master Data
+[1] - Products
