@@ -85,9 +85,9 @@ function GridTable({tab, vref}) {
             {/* <LoadPanel enabled={false}  showPane={false} /> */}
             <Editing mode="form" allowUpdating={true} allowAdding={true} allowDeleting={true} >
                 <Form>
-                    <Item itemType="group" colCount={2} colSpan={2}>
+                    <Item itemType="group" colCount={4} colSpan={2}>
                         <Item dataField="number"  editorOptions={{ disabled: true  }} />
-                        <Item dataField="name" />
+                        <Item dataField="name" />   
                         <Item dataField="brand"  editorType="dxLookup" editorOptions={{  dataSource: brandDS,  valueExpr:'_id', displayExpr:'name', searchEnabled: true, value: '' }} />
                         <Item dataField="category"  editorType="dxLookup" editorOptions={{ dataSource: categoryDS,  valueExpr:'_id', displayExpr:'name', searchEnabled: true, value: '' }} />
                         <Item dataField="bprice" editorType="dxNumberBox" editorOptions={{ format: "Rp #,##0.##" }} />
@@ -96,9 +96,8 @@ function GridTable({tab, vref}) {
                         <Item dataField="qtytype"  editorType="dxLookup" editorOptions={{  dataSource: qtyDS,  valueExpr:'_id', displayExpr:'name', searchEnabled: true, value: '' }} />
                         <Item dataField="color" />
                         <Item dataField="supplier"  editorType="dxLookup" editorOptions={{  dataSource: supplierDS,  valueExpr:'_id', displayExpr:'name', searchEnabled: true, value: '' }} />
-                     
                         <Item dataField="desc" />
-                        <Item itemType="group" caption="Gambar" colCount={2} colSpan={2}> 
+                        <Item itemType="group" caption="Gambar" colCount={1}> 
                             <FileUploader ref={refImageUploader} 
                                 selectButtonText="Select photo" 
                                 labelText="" accept="image/*" 
@@ -137,7 +136,7 @@ function GridTable({tab, vref}) {
             {/* <Column dataField="duedate" caption="DUE DATE" visible={true} dataType="date" format="dd/MM/yyyy" width={120} cssClass="row-vertical-align" /> */}
             <Column dataField="image" caption="GAMBAR" visible={true}  cssClass="row-vertical-align" />
             <Column dataField="desc" caption="DESK. " visible={true}  cssClass="row-vertical-align" >
-                  <FormItem colSpan={2} editorType="dxTextArea" editorOptions={{'height':'100'}} />
+                  <FormItem colSpan={2} editorType="dxTextArea" />
             </Column>
             
     </DataGrid>  

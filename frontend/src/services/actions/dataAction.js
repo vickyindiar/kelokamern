@@ -278,7 +278,7 @@ export const updateData = (tab, data) => dispatch => {
 
 }
 
-export const deleteData = (id, tab) => dispatch => {
+export const deleteData = (data, tab) => dispatch => {
   let url = '';
   let token = localStorage.getItem('jwt');
   let axiosConfig = {
@@ -298,7 +298,7 @@ export const deleteData = (id, tab) => dispatch => {
    else {               url = productsTable.url;  }
  //  dispatch({type: TOOGLE_LOADING, payload: true})
    const deleteOne = () => {
-    axios.delete(url+'/'+id[0], axiosConfig).then(res => {
+    axios.delete(url+'/'+data.id[0], axiosConfig).then(res => {
       if(res.status === 200){
         console.log(res);
       }else{
@@ -313,7 +313,7 @@ export const deleteData = (id, tab) => dispatch => {
    const deleteAll = () => {
      debugger;
     let cUrl = `${url}?deleteMany=1`;
-    let body = { data: { '_id': id } }
+    let body = { data: { '_id': data.ids, '_img': data.imgs } }
     axiosConfig.data = body;
     axios.delete(cUrl, axiosConfig).then(res => {
       if(res.status === 200){
@@ -327,8 +327,8 @@ export const deleteData = (id, tab) => dispatch => {
     })
    }
    debugger;
-   if(id.length === 1) deleteOne()
-   else if(id.length > 1) deleteAll();
+   if(data.ids.length === 1) deleteOne()
+   else if(data.ids.length > 1) deleteAll();
 }
 
 

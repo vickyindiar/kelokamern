@@ -49,7 +49,7 @@ function Data() {
         <div className="content-data">
             {/* < ToolsAction onItemClick={onActionClick} /> */}
             <TabPanel
-                height={"95%"}
+                height={"100%"}
                 selectedIndex={tabActive}
                 onOptionChanged={onSelectionChanged}
                 onSelectionChanged={ onInitialized }

@@ -176,10 +176,16 @@ export const onRowInserted = (e, tab, image) => dispatch => {
 
 export const onRowRemoved = (e, tab) => dispatch => {
     debugger;
-    let ids = [];
+    let data = {};
+
     //tambah pramamter nama image todo
     const selectedRow = e.component.getSelectedRowsData();
-    if(selectedRow.length > 0) ids = selectedRow.map(el => el._id)
-    else if(e.data) ids.push(e.data._id);
-    dispatch(deleteData(ids), tab);
+    if(selectedRow.length > 0) { 
+        data.ids = selectedRow.map(el => el._id)
+        data.imgs = selectedRow.map(el => el.image)
+    }
+     else if(e.data) {
+         data.ids = []; data.ids.push(e.data._id)
+    }
+    dispatch(deleteData(data), tab);
 }

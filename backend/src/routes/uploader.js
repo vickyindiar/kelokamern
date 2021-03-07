@@ -21,9 +21,11 @@ const storage = multer.diskStorage({
 function removeFile(file){
   const __dirname = path.resolve();
   const __p =  path.join(__dirname,  'backend/uploads')
-  const img =  path.join(__p,  element)
   file.forEach(element => {
-    fs.unlink(img)
+    let img =  path.join(__p,  element)
+    fs.unlink(img, err => {
+      if (err) throw err;
+    })
   });
 }
 
