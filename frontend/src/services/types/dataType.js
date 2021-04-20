@@ -1,5 +1,4 @@
 export const CHANGE_TAB = "CHANGE_TAB";
-export const OPEN_MODAL = "OPEN_MODAL";
 
 export const GET_PRODUCT = "GET_PRODUCT";
 export const GET_SUPPLIER = "GET_SUPPLIER";
@@ -9,18 +8,4 @@ export const GET_CATEGORY = "GET_CATEGORY";
 export const GET_QTYTYPE = "GET_QTYTYPE";
 export const GET_COLOR = "GET_COLOR";
 
-export const STORE_PRODUCT  = "STORE_PRODUCT";
-export const STORE_SUPPLIER = "STORE_SUPPLIER";
-export const STORE_CUSTOMER = "STORE_CUSTOMER";
-export const STORE_BRAND    = "STORE_BRAND";
-export const STORE_CATEGORY = "STORE_CATEGORY";
-export const STORE_QTYTYPE  = "STORE_QTYTYPE";
-export const STORE_COLOR = "GET_COLOR";
-
-export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
-export const UPDATE_SUPPLIER = "UPDATE_SUPPLIER";
-export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
-export const UPDATE_BRAND = "UPDATE_BRAND";
-export const UPDATE_CATEGORY = "UPDATE_CATEGORY";
-export const UPDATE_QTYTYPE = "UPDATE_QTYTYPE";
 export const TOOGLE_LOADING = "TOOGLE_LOADING";

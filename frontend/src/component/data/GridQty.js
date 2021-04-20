@@ -17,36 +17,30 @@ function GridQty({tab, vref}) {
         )// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log(tab,'render grid Qty');
     return (
          <DataGrid
                 ref={vref}
                 id={'gridViewQty'}
-               // key={'evdno'}
                 dataSource= { qtyDS }
-                //onContentReady={ (e) => gConfig.onContentReady(e, isLoad) }
                 columnAutoWidth={true}
                 height= {"100%"}
                 width= {"100%"}
-                //noDataText={isLoad ? '' : 'No Data !'}
-                //onToolbarPreparing={ (e) => gConfig.onToolbarPreparing(e, selectionMode, setSelectionMode, expandMode, setExpandMode) }
+                noDataText={'No Data !'}
+                onToolbarPreparing={ (e) => gConfig.onToolbarPreparing(e, selectionMode, setSelectionMode, expandMode, setExpandMode) }
                 showBorders={false}
                 showColumnLines= {false}
                 showRowLines={true}
                 rowAlternationEnabled={true}
-                //onSelectionChanged= {  gConfig.changeStateSelectionChange  }  
                 allowColumnResizing={true}
-                // onInitNewRow= { gConfig.onInitNewRow() }
-                // onRowUpdated = { (e) => gConfig.onRowUpdated(e, 5)(dispatch) }
-                // onRowInserted = { (e) => { gConfig.onRowInserted(e, 5)(dispatch) } }
-                // onRowRemoved = { (e) => { gConfig.onRowRemoved(e, 5)(dispatch) }}
+                onSelectionChanged= { (e) => gConfig.changeStateSelectionChange(e)  }  
+                onInitNewRow={ (e) => { gConfig.onInitNewRow(e); }}
+                onRowInserted = { (e) => gConfig.onRowInserted(e, gConfig.BRAND_TAB_INDEX, null)(dispatch) }
+                onRowUpdated = { (e) => { gConfig.onRowUpdated(e, gConfig.BRAND_TAB_INDEX, null)(dispatch) } }
+                onRowRemoving = { (e) => { gConfig.onRowRemoved(e, gConfig.BRAND_TAB_INDEX)(dispatch) }}
             > 
-              <Editing refreshMode={'reshape'} mode="popup" allowAdding={true} allowUpdating={true} allowDeleting={true} >
-                <Popup title="Qty" showTitle={true} width={700} height={600}>
-                    <Position my="top" at="top" of={window} />
-                </Popup>
+            <Editing mode="form" allowUpdating={true} allowAdding={true} allowDeleting={true} texts={{saveRowChanges:'Simpan', cancelRowChanges:'Batal' }} >
                 <Form>
-                    <Item itemType="group" colCount={2} colSpan={2}>
+                    <Item itemType="group" colCount={4} colSpan={2}>
                         <Item dataField="number"  editorOptions={{ disabled: true  }} />
                         <Item dataField="code" />
                         <Item dataField="name" />
@@ -55,14 +49,11 @@ function GridQty({tab, vref}) {
                 </Form>
             </Editing>
 
-            <Scrolling mode={"virtual"} />
-            <LoadPanel enabled={true}  showPane={true} />
-            <GroupPanel visible={true} />
+            <GroupPanel visible={true} emptyPanelText={'Tarik kolom disini untuk menggabungkan Baris '} em />
             <Grouping autoExpandAll={expandMode} />
-            <SearchPanel visible={true} highlightCaseSensitive={true} />
+            <SearchPanel visible={true} highlightCaseSensitive={true} placeholder='  Cari disini..  '/>
             <Selection mode={selectionMode} selectAllMode={'allPages'} showCheckBoxesMode={'always'} allowSelectAll={true} />
-            <ColumnFixing enabled={true} />
-            {/* { gConfig.generateColumns(tab) } */}
+            <ColumnFixing enabled={true} />  
             <Column dataField="number" caption="NO." visible={true}  cssClass="row-vertical-align" />
             <Column dataField="code" caption="CODE" visible={true}  cssClass="row-vertical-align" />
             <Column dataField="name" caption="NAMA" visible={true}  cssClass="row-vertical-align" />

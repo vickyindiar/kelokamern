@@ -1,7 +1,6 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import DataGrid, {Column, Selection, Grouping, GroupPanel, ColumnFixing, SearchPanel, Scrolling, LoadPanel, Editing, Popup, Position, Form } from 'devextreme-react/data-grid';
-// import isEmpty from '../../services/helper/isEmpty';
+import DataGrid, {Column, Selection, Grouping, GroupPanel, ColumnFixing, SearchPanel, Scrolling, LoadPanel, Editing, Form } from 'devextreme-react/data-grid';
 import { Item } from 'devextreme-react/form';
 import * as gConfig from './ConfigGrids';
 
@@ -18,34 +17,29 @@ function GridBrand({tab, vref}) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log(tab,'render grid brand');
     return (
          <DataGrid
                 ref={vref}
                 id={'gridViewBrd'}
-               // key={'evdno'}
                 dataSource= { brandDS }
                 //onContentReady={ (e) => gConfig.onContentReady(e, isLoad) }
                 columnAutoWidth={true}
                 height= {"100%"}
                 width= {"100%"}
-                //noDataText={isLoad ? '' : 'No Data !'}
+                noDataText={'No Data !'}
                 onToolbarPreparing={ (e) => gConfig.onToolbarPreparing(e, selectionMode, setSelectionMode, expandMode, setExpandMode) }
                 showBorders={false}
                 showColumnLines= {false}
                 showRowLines={true}
                 rowAlternationEnabled={true}
-               // onSelectionChanged= {  gConfig.changeStateSelectionChange  }  
                 allowColumnResizing={true}
-                // onInitNewRow= { gConfig.onInitNewRow() }
-                // onRowUpdated = { (e) => gConfig.onRowUpdated(e,  3)(dispatch) }
-                // onRowInserted = { (e) => { gConfig.onRowInserted(e, 3)(dispatch) } }
-                // onRowRemoved = { (e) => { gConfig.onRowRemoved(e, 3)(dispatch) }}
+                onSelectionChanged= { (e) => gConfig.changeStateSelectionChange(e)  }  
+                onInitNewRow={ (e) => { gConfig.onInitNewRow(e); }}
+                onRowInserted = { (e) => gConfig.onRowInserted(e, gConfig.BRAND_TAB_INDEX, null)(dispatch) }
+                onRowUpdated = { (e) => { gConfig.onRowUpdated(e, gConfig.BRAND_TAB_INDEX, null)(dispatch) } }
+                onRowRemoving = { (e) => { gConfig.onRowRemoved(e, gConfig.BRAND_TAB_INDEX)(dispatch) }}
             > 
-             <Editing refreshMode={'reshape'} mode="popup" allowAdding={true} allowUpdating={true} allowDeleting={true} >
-                <Popup title="Barang" showTitle={true} width={700} height={600}>
-                    <Position my="top" at="top" of={window} />
-                </Popup>
+            <Editing mode="form" allowUpdating={true} allowAdding={true} allowDeleting={true} texts={{saveRowChanges:'Simpan', cancelRowChanges:'Batal' }} >
                 <Form>
                     <Item itemType="group" colCount={2} colSpan={2}>
                         <Item dataField="number"  editorOptions={{ disabled: true  }} />
@@ -55,14 +49,11 @@ function GridBrand({tab, vref}) {
                 </Form>
             </Editing>
 
-            <Scrolling mode={"virtual"} />
-            <LoadPanel enabled={true}  showPane={true} />
-            <GroupPanel visible={true} />
+            <GroupPanel visible={true} emptyPanelText={'Tarik kolom disini untuk menggabungkan Baris '} em />
             <Grouping autoExpandAll={expandMode} />
-            <SearchPanel visible={true} highlightCaseSensitive={true} />
+            <SearchPanel visible={true} highlightCaseSensitive={true} placeholder='  Cari disini..  '/>
             <Selection mode={selectionMode} selectAllMode={'allPages'} showCheckBoxesMode={'always'} allowSelectAll={true} />
-            <ColumnFixing enabled={true} />
-            {/* { gConfig.generateColumns(tab) } */}
+            <ColumnFixing enabled={true} />  
             <Column dataField="number" caption="NO." visible={true}  cssClass="row-vertical-align" />
             <Column dataField="name" caption="NAMA" visible={true}  cssClass="row-vertical-align" />
             <Column dataField="desc" caption="DESK" visible={true}  cssClass="row-vertical-align" />

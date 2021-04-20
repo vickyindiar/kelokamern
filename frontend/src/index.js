@@ -2,6 +2,7 @@ import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './styles/sass/reset.scss';
 import './styles/sass/index.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';

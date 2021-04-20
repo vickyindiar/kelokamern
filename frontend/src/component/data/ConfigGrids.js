@@ -1,9 +1,16 @@
 import React from 'react';
 import { Column, Lookup } from 'devextreme-react/data-grid';
 import isEmpty from '../../services/helper/isEmpty';
-import { getColumnsGrid, storeData, updateData, deleteData } from "../../services/actions/dataAction";
+import { storeData, updateData, deleteData } from "../../services/actions/dataAction";
 
 
+export const PRODUCT_TAB_INDEX = 0
+export const SUPPLIER_TAB_INDEX = 1
+export const CUSTOMER_TAB_INDEX = 2
+export const BRAND_TAB_INDEX = 3
+export const CATEGORY_TAB_INDEX = 4
+export const QTYTYPE_TAB_INDEX = 5
+export const COLOR_TAB_INDEX = 6
 
 export const onToolbarPreparing = (e, selectionMode, setSelectionMode, expandMode, setExpandMode ) => {
     var dataGrid = e.component;
@@ -18,10 +25,10 @@ export const onToolbarPreparing = (e, selectionMode, setSelectionMode, expandMod
         sortIndex: 40,
         showText: "inMenu",
         options: {
-            hint: selectionMode === 'multiple' ? "Single selection" : "Multiple selection" ,
+            hint: selectionMode === 'multiple' ? "Pilih Satu Baris" : "Pilih Sekaligus" ,
             elementAttr: { "id": "btnMulti" },
             icon: "check", //"fa fa-check",
-            text: "Multiple selection",
+            text: "Pilih Sekaligus",
             onClick: (e) => { setSelectionMode(selectionMode === 'multiple' ? "single" : "multiple" ); } // this.selectionModeChanged.bind(this)
         }
     },
@@ -33,10 +40,10 @@ export const onToolbarPreparing = (e, selectionMode, setSelectionMode, expandMod
         sortIndex: 40,
         showText: "inMenu",
         options: {
-            hint: "Filter",
+            hint: "Saring Baris",
             elementAttr: { "id": "btnFilter" },
             icon: "filter", //"fa fa-filter",
-            text: "Filter Row",
+            text: "Saring Baris",
             onClick: function (e) {
                 var filter = dataGrid.option("filterRow.visible") === false;
                 dataGrid.option("filterRow.visible", filter);
@@ -51,12 +58,30 @@ export const onToolbarPreparing = (e, selectionMode, setSelectionMode, expandMod
         sortIndex: 40,
         showText: "inMenu",
         options: {
-            hint: expandMode ? "Collapse All" : "Expand All", 
+            hint: expandMode ? "Persempit Baris" : "Perluas Baris", 
             elementAttr: { "id": "btnExpand" },
             icon: expandMode ? "collapse" : "expand",
-            text: expandMode ? "Collapse All" : "Expand All",
+            text: expandMode ? "Persempit Baris" : "Perluas Baris",
             onClick: (e) => {
                 setExpandMode(!expandMode);
+            } 
+        }
+    },
+    {
+        widget: "dxButton",
+        location: "after",
+        name: "btnMultiDelete",
+        locateInMenu: "auto",
+        sortIndex: 40,
+        showText: "inMenu",
+        visible: true,
+        options: {
+            hint: "Hapus Sekaligus", 
+            elementAttr: { "id": "btnMultiDel" },
+            icon: "trash",
+            text: "Hapus Sekaligus",
+            onClick: (e) => {
+              //  setExpandMode(!expandMode);
             } 
         }
     }
@@ -73,119 +98,32 @@ export const onContentReady = (e, isLoad) => {
     var scrollable = e.component.getScrollable();  
     scrollable.scrollTo(scrollable.scrollHeight()); 
 }
- 
-export const setCellValue = (v) => {
- let result = !isEmpty( v.value) ?  v.value.name : '';
- return result;
-}
 
-export const generateColumns = (tab, customConfig) => {
-    const columns = [];
-    const data = [...getColumnsGrid(tab)];
-    // eslint-disable-next-line array-callback-return
-    data.map((e, i) => {
-        if(e.hasOwnProperty('custom')){
-            if(e.custom === 'lookup'){
-                let cc = customConfig.find(x => x.dataField === e.dataField);
-                columns.push(
-                    <Column {...e} key={e.id} > 
-                        cc.lookup()
-                    </Column>  
-                )
-            }
-            else {
-                columns.push( <Column {...e} customizeText={setCellValue} key={e.id} /> )
-            }
-        }
-        else{
-            columns.push( <Column {...e} key={e.id}/> )
-        }
-    })
-    return columns;
-}
-
-
-
-export const onRowUpdated = (e, tab) => dispatch => {
-        dispatch(updateData(tab, e.data));
-}
-
-export const onRowUpdating = (e, tab, brandDS, categoryDS, supplierDS, qtyDS) => {
-    if (tab === 0){
-        let cValue = '';
-        let filtered = [];
-        let lookup = [
-            {f: 'brand', ds: brandDS},
-            {f: 'category', ds: categoryDS},
-            {f: 'supplier', ds: supplierDS},
-            {f: 'qtytype', ds: qtyDS},
-        ];
-
-        for (let index = 0; index < lookup.length; index++) {
-            let f = lookup[index].f;
-            cValue = e.newData.hasOwnProperty(f) ? e.newData[f] : e.oldData[f];
-            // eslint-disable-next-line no-loop-func
-            filtered = lookup[index].ds.filter(v => v.id === cValue);
-            e.newData[`${f}_id`] = cValue;
-            e.newData[f] = !isEmpty(filtered) ? { id: filtered[0].id, name: filtered[0].name } : e.newData[f];      
-        }
-    }
-}
 export const onInitNewRow = (e) => {
     e.data.number = e.component.option('dataSource').length + 1;
 }  
 
-export const onRowInserting = (e, refImageUploader) => {
-    
-}
-
 export const onRowInserted = (e, tab, image) => dispatch => {
-    e.data.image = image;
+    if(image){ e.data.image = image; }
     e.data.code = e.data.number;
     dispatch(storeData(tab, e.data));
 }
 
+export const onRowUpdated = (e, tab, image) => dispatch => {
+    dispatch(updateData(tab, e.data, image));
+}
 
-
-
-
-
-// export const onRowInserting = (e, tab, brandDS, categoryDS, supplierDS, qtyDS) => {
-//     if (tab === 0) {
-//         if (tab === 0){
-//             let cValue = '';
-//             let filtered = [];
-//             let lookup = [
-//                 {f: 'brand', ds: brandDS},
-//                 {f: 'category', ds: categoryDS},
-//                 {f: 'supplier', ds: supplierDS},
-//                 {f: 'qtytype', ds: qtyDS},
-//             ];
-    
-//             for (let index = 0; index < lookup.length; index++) {
-//                 let f = lookup[index].f;
-//                 cValue = e.data[f];
-//                 // eslint-disable-next-line no-loop-func
-//                 filtered = lookup[index].ds.filter(v => v.id === cValue);
-//                 e.data[`${f}_id`] = cValue;
-//                 e.data[f] = !isEmpty(filtered) ? { id: filtered[0].id, name: filtered[0].name } : e.data[f];      
-//             }
-//         }
-//     }
-// }
-
-export const onRowRemoved = (e, tab) => dispatch => {
-    debugger;
+export const onRowRemoved = (e, tab, hasImage) => dispatch => {
     let data = {};
-
-    //tambah pramamter nama image todo
     const selectedRow = e.component.getSelectedRowsData();
     if(selectedRow.length > 0) { 
         data.ids = selectedRow.map(el => el._id)
-        data.imgs = selectedRow.map(el => el.image)
+       if (hasImage) data.imgs = selectedRow.map(el => el.image);
     }
      else if(e.data) {
-         data.ids = []; data.ids.push(e.data._id)
+         data.ids = []; data.imgs = [];
+         data.ids.push(e.data._id)
+       if(hasImage) data.imgs.push(e.data.image);
     }
-    dispatch(deleteData(data), tab);
+    dispatch(deleteData(data, tab));
 }

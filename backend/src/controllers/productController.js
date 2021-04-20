@@ -29,18 +29,21 @@ const createProduct = async (req, res, next) => {
         const postProduct = await product.save()
         res.status(201).json(postProduct)
     } catch (error) {
-        
     }
-  
 }
 
 const updateProduct = async(req, res) => {
     let {code, name, sprice, bprice, qtytype, stock,
         category, supplier, brand, color,
         image, desc } = req.body;
-
-        const product = await Product.findById(req.params._id)
+        const product = await Product.findById(req.params._id);
         if(product){
+            if(product.image !== image){
+                let lastImg = [];
+                lastImg.push(product.image);
+                await removeFile(lastImg);
+            }
+
             product.code = code;
             product.name = name;
             product.sprice = sprice;

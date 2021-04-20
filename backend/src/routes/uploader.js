@@ -23,9 +23,11 @@ function removeFile(file){
   const __p =  path.join(__dirname,  'backend/uploads')
   file.forEach(element => {
     let img =  path.join(__p,  element)
-    fs.unlink(img, err => {
-      if (err) throw err;
-    })
+    if(fs.existsSync(img)){
+      fs.unlink(img, err => {
+        if (err) throw err;
+      })
+    }
   });
 }
 

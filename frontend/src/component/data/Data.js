@@ -1,5 +1,5 @@
-import React, {useState, useRef} from 'react';
-import {useDispatch } from 'react-redux'
+import React, {useState, useRef, useEffect} from 'react';
+import {useSelector, useDispatch } from 'react-redux'
 import ToolsAction from './ToolsAction';
 import Header from '../template/Header';
 import TabPanel, {Item} from 'devextreme-react/tab-panel';
@@ -13,27 +13,24 @@ import { getData } from "../../services/actions/dataAction";
 import '../../styles/sass/component/_data.scss'
 
 function Data() {
-
     const refGridProduct = useRef(null);
     const refGridCustomer = useRef(null)
     const refGridBrand = useRef(null)
     const refGridSupplier = useRef(null)
     const refGridCategory = useRef(null)
     const refGridQty = useRef(null)
-
+    const refPanel = useRef(null);
     const [tabActive, setTabActive] = useState(0);
     const dispatch = useDispatch();
+    // const productDS = useSelector(s => s.data.dataProduct);
     
     const onSelectionChanged = (args) => {
         if(args.name === 'selectedIndex') {
-            console.log('change tab')
             setTabActive(args.value);
           }
     }
 
-    const onInitialized = (args) =>{
-        dispatch(getData(tabActive));
-    }
+    const onInitialized = (args) =>{ dispatch(getData(tabActive)); }
 
     const onActionClick = (e) => {
         if(e.itemIndex === 0){
@@ -41,7 +38,6 @@ function Data() {
         }
     }
 
-    console.log('render data')
     return (
     <React.Fragment>
         <div className="content-container data">
@@ -49,6 +45,7 @@ function Data() {
         <div className="content-data">
             {/* < ToolsAction onItemClick={onActionClick} /> */}
             <TabPanel
+                ref ={refPanel}
                 height={"100%"}
                 selectedIndex={tabActive}
                 onOptionChanged={onSelectionChanged}
@@ -59,7 +56,7 @@ function Data() {
                 swipeEnabled={true}
             > 
                 <Item title="Barang" key={0} >
-                    <GridProduct tab={0} vref={refGridProduct}/>
+                    <GridProduct tab={0} vref={refGridProduct} />
                 </Item>
                 <Item title="Supplier" ke={1} >
                     <GridSupplier tab={1} vref={refGridSupplier} />
