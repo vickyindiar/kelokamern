@@ -9,9 +9,7 @@ function LeftSecSales() {
         <div className={'left-section-sales'}>
             <ScanSales />
             <ItemSales />
-            <div className={'position-fixed'}>
-              <NoteSales />
-            </div>
+            <NoteSales />
         </div>
     )
 }

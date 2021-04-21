@@ -1,16 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';   
 import {Row, Col, Card} from 'react-bootstrap';
 import DataGrid, {Column, Selection, Grouping, GroupPanel, ColumnFixing, SearchPanel, Scrolling, LoadPanel, Editing, Form } from 'devextreme-react/data-grid';
+import ItemCellCustom from './ItemCellCustom';
 
 function ItemSales() {
+    const itemSource = useSelector(s => s.sales.dataItems)
     return (
         <>
-          <Card>
+          <Card className={'mt-2 p-4 item-sales-card'}>
             <DataGrid
-                    ref={vref}
+                 //   ref={vref}
                     id={'gridItemSales'}
-                    dataSource= {  }
+                    dataSource= { itemSource }
                     columnAutoWidth={true}
                     height= {"100%"}
                     width= {"100%"}
@@ -18,34 +20,31 @@ function ItemSales() {
                     showBorders={false}
                     showColumnLines= {false}
                     showRowLines={true}
-                    rowAlternationEnabled={true}
+                    rowAlternationEnabled={false}
                     allowColumnResizing={true}
-                    onSelectionChanged= { (e) =>{} }  
-                    onInitNewRow={ (e) => {  }}
-                    onRowInserted = { (e) =>{}}
-                    onRowUpdated = { (e) => { } }
-                    onRowRemoving = { (e) => {  }}
+                    // onSelectionChanged= { (e) =>{} }  
+                    // onInitNewRow={ (e) => {  }}
+                    // onRowInserted = { (e) =>{}}
+                    // onRowUpdated = { (e) => { } }
+                    // onRowRemoving = { (e) => {  }}
                 > 
-                <Editing mode="form" allowUpdating={true} allowAdding={true} allowDeleting={true} texts={{saveRowChanges:'Simpan', cancelRowChanges:'Batal' }} >
-                    <Form>
-                        <Item itemType="group" colCount={2} colSpan={2}>
-                            <Item dataField="number"  editorOptions={{ disabled: true  }} />
-                            <Item dataField="name" />
-                            <Item dataField="desc" editorType="dxTextArea" colSpan={2} editorOptions={{ height: 100 }} />
-                        </Item>  
-                    </Form>
-                </Editing>
+                <Editing mode="cell" 
+                    allowUpdating={true} 
+                    allowAdding={false} 
+                    allowDeleting={true} 
+                    texts={{saveRowChanges:'Simpan', cancelRowChanges:'Batal' }}
+                />
 
-                <GroupPanel visible={true} emptyPanelText={'Tarik kolom disini untuk menggabungkan Baris '} em />
-                <Grouping autoExpandAll={expandMode} />
-                <SearchPanel visible={true} highlightCaseSensitive={true} placeholder='  Cari disini..  '/>
-                <Selection mode={selectionMode} selectAllMode={'allPages'} showCheckBoxesMode={'always'} allowSelectAll={true} />
+                <GroupPanel visible={false} emptyPanelText={'Tarik kolom disini untuk menggabungkan Baris '} em />
+                {/* <Grouping autoExpandAll={expandMode} /> */}
+                <SearchPanel visible={false} highlightCaseSensitive={true} placeholder='  Cari disini..  '/>
+                <Selection mode={'single'} selectAllMode={'allPages'} showCheckBoxesMode={'always'} allowSelectAll={true} />
                 <ColumnFixing enabled={true} />  
-                <Column dataField="number" caption="No." visible={true}  cssClass="row-vertical-align" />
-                <Column dataField="item" caption="Item" visible={true}  cssClass="row-vertical-align" />
-                <Column dataField="price" caption="Price" visible={true}  cssClass="row-vertical-align" />
-                <Column dataField="qty" caption="Price" visible={true}  cssClass="row-vertical-align" />
-                <Column dataField="price" caption="Price" visible={true}  cssClass="row-vertical-align" />
+                <Column dataField="number" caption="No." width={50} visible={true}  cssClass="row-vertical-align" allowEditing={false}/>
+                <Column dataField="name" caption="Items" visible={true}  cssClass="row-vertical-align" allowEditing={false} cellRender={ItemCellCustom}/>
+                <Column dataField="price" caption="Price" visible={true}  cssClass="row-vertical-align" allowEditing={false} />
+                <Column dataField="qty" caption="Qty" dataType='number' editorOptions visible={true}  cssClass="row-vertical-align" allowEditing={true}/>
+                <Column dataField="disc" caption="Discount" visible={true}  cssClass="row-vertical-align" allowEditing={false} calculateDisplayValue={(e)=>{ return e.disc === 0 ? '' : e.disc  }  } />
             </DataGrid>  
 
           </Card>  

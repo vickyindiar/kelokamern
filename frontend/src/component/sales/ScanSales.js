@@ -5,19 +5,13 @@ import { TextBox, Button as TextBoxButton } from 'devextreme-react/text-box';
 
 function ScanSales() {
 
-const passwordButton = {
-
-  };
-
-
     return (
         <>
-            <Card className={'mt-2 p-4'}>
+            <Card className={'mt-2 p-4 scan-sales-card'}>
                 <TextBox
                     placeholder="scan or search here.."
-                    stylingMode="lined"
+                    stylingMode="outlined"
                     defaultValue=""
-                //  mode={this.state.passwordMode}
                 >
                     <TextBoxButton
                     name="search"
