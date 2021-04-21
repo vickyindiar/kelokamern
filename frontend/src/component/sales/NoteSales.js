@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 function NoteSales() {
     return (
         <div>
-            notsales
+            ini note nya
         </div>
     )
 }
