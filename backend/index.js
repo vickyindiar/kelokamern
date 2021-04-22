@@ -45,7 +45,7 @@ app.use('/v1/order', orderRouter);
 app.use('/v1/orderDetail', orderDetailRouter);
 app.use('/v1/product', productRouter);
 app.use('/v1/profile', profileRouter);
-app.use('/v1/qtytpe', qtytypeRouter);
+app.use('/v1/qtytype', qtytypeRouter);
 app.use('/v1/role', roleRouter);
 app.use('/v1/supplier', supplierRouter);
 app.use('/v1/upload', uploadRouter);

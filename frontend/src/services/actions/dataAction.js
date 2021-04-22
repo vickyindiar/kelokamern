@@ -114,7 +114,6 @@ const generateNumber = (dataSource) => {
 }
 
 const getAction = (index, res) => {
-  debugger;
   if(     index === configGrid.PRODUCT_TAB_INDEX)      { return { type: GET_PRODUCT, payload: { dataSource: generateNumber(res.data) } }; } 
   else if(index === configGrid.SUPPLIER_TAB_INDEX) { return { type: GET_SUPPLIER, payload: { dataSource: generateNumber(res.data)  } }; } 
   else if(index === configGrid.CUSTOMER_TAB_INDEX) { return { type: GET_CUSTOMER, payload: { dataSource: generateNumber(res.data)  } }; }
@@ -185,7 +184,7 @@ export const getProductSupport = async ()  => {
     try {
       const brand =  await axios.get(`${config.apiURL}brand`, header);
       const category = await axios.get(`${config.apiURL}category`, header);
-      const qtytype = await axios.get(`${config.apiURL}qtytpe`, header);
+      const qtytype = await axios.get(`${config.apiURL}qtytype`, header);
       const supplier = await axios.get(`${config.apiURL}supplier`, header);
 
       if(brand && category && qtytype && supplier)
@@ -202,7 +201,6 @@ export const storeData = (tab, data) => async dispatch => {
   let token = localStorage.getItem('jwt');
   let axiosConfig = { headers: { Authorization: token } };
   getUrl(tab);
-  debugger;
   if(data.hasOwnProperty('image')){
     img = await fileUploadHandler(data.image);
     if(img){ data.image = img; }

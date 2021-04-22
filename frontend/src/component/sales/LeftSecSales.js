@@ -1,15 +1,15 @@
 import React from 'react'
 import {Row, Col, Card} from 'react-bootstrap';
-import ScanSales from './ScanSales';
-import ItemSales from './ItemSales';
-import NoteSales from './NoteSales';
+import LeftScanSales from './LeftScanSales';
+import LeftItemSales from './LeftItemSales';
+import LeftNoteSales from './LeftNoteSales';
 
 function LeftSecSales() {
     return (
         <div className={'left-section-sales'}>
-            <ScanSales />
-            <ItemSales />
-            <NoteSales />
+            <LeftScanSales />
+            <LeftItemSales />
+            <LeftNoteSales />
         </div>
     )
 }

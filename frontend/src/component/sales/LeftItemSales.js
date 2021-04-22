@@ -2,10 +2,36 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';   
 import {Row, Col, Card} from 'react-bootstrap';
 import DataGrid, {Column, Selection, Grouping, GroupPanel, ColumnFixing, SearchPanel, Scrolling, LoadPanel, Editing, Form } from 'devextreme-react/data-grid';
-import ItemCellCustom from './ItemCellCustom';
+import LeftItemCellCustom from './LeftItemCellCustom';
+import {getData} from '../../services/actions/dataAction';
+import {QTYTYPE_TAB_INDEX}  from '../data/ConfigGrids';
 
-function ItemSales() {
-    const itemSource = useSelector(s => s.sales.dataItems)
+function LeftItemSales() {
+
+    const itemSource = useSelector(s => s.sales.dataItems);
+    const qtyDS = useSelector(s => s.data.dataQtytype);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getData(QTYTYPE_TAB_INDEX))    
+    
+    }, [])
+
+    const customCellQty = (e) => {
+        if(qtyDS){
+            let filtered = qtyDS.filter(v => v._id === e.data.qtytype );
+            if(filtered.length === 0) {return e.data.qty}
+            return(
+                <div>
+                    <div> {e.data.qty} </div>
+                   <div> {filtered[0].name} </div>
+                </div>
+            )
+        }
+        else{
+            return e.data.qty
+        }
+    }
+    
     return (
         <>
           <Card className={'mt-2 p-4 item-sales-card'}>
@@ -22,6 +48,7 @@ function ItemSales() {
                     showRowLines={true}
                     rowAlternationEnabled={false}
                     allowColumnResizing={true}
+                    onCellPrepared = { (e) => {  if(e.rowType === 'header' || e.rowType === 'data'){ e.cellElement.style.textAlign = 'center' } } }
                     // onSelectionChanged= { (e) =>{} }  
                     // onInitNewRow={ (e) => {  }}
                     // onRowInserted = { (e) =>{}}
@@ -41,10 +68,19 @@ function ItemSales() {
                 <Selection mode={'single'} selectAllMode={'allPages'} showCheckBoxesMode={'always'} allowSelectAll={true} />
                 <ColumnFixing enabled={true} />  
                 <Column dataField="number" caption="No." width={50} visible={true}  cssClass="row-vertical-align" allowEditing={false}/>
-                <Column dataField="name" caption="Items" visible={true}  cssClass="row-vertical-align" allowEditing={false} cellRender={ItemCellCustom}/>
+                <Column dataField="name" caption="Items" visible={true}  cssClass="row-vertical-align" allowEditing={false} cellRender={LeftItemCellCustom}/>
                 <Column dataField="price" caption="Price" visible={true}  cssClass="row-vertical-align" allowEditing={false} />
-                <Column dataField="qty" caption="Qty" dataType='number' editorOptions visible={true}  cssClass="row-vertical-align" allowEditing={true}/>
-                <Column dataField="disc" caption="Discount" visible={true}  cssClass="row-vertical-align" allowEditing={false} calculateDisplayValue={(e)=>{ return e.disc === 0 ? '' : e.disc  }  } />
+                <Column dataField="qty"
+                    caption="Qty" 
+                    dataType='number' 
+                    visible={true} 
+                    cssClass="row-vertical-align" 
+                    allowEditing={true} 
+                    editorOptions={{'showSpinButtons':true}} 
+                    cellRender={customCellQty}/>
+                <Column dataField="disc" caption="Discount" visible={true}  cssClass="row-vertical-align" allowEditing={true} calculateDisplayValue={(e)=>{ return e.disc === 0 ? '' : e.disc  }  } />
+                <Column dataField="subtotal" caption="Sub Total" dataType='number'  visible={true}  cssClass="row-vertical-align" allowEditing={false}/>
+
             </DataGrid>  
 
           </Card>  
@@ -53,5 +89,5 @@ function ItemSales() {
 }
 
 const areEqual = (prevProps, nextProps) => true;
-export default React.memo(ItemSales, areEqual)
+export default React.memo(LeftItemSales, areEqual)
 

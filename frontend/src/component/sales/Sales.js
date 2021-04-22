@@ -10,9 +10,9 @@ export class Sales extends Component {
       <React.Fragment>
         <div className="content-container sales">
         <Header /> 
-          <div className="content-data">
+          <div className="content-sales">
               <Row className ="nopadding">
-                <Col xs={7}>
+                <Col xs={8}>
                     <LeftSecSales />
                 </Col>
                 <Col>
@@ -25,5 +25,6 @@ export class Sales extends Component {
     )
   }
 }
+const areEqual = (prevProps, nextProps) => true;
+export default React.memo(Sales, areEqual)
 
-export default Sales

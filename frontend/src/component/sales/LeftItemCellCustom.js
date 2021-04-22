@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ItemCellCustom(cellData) {
+function LeftItemCellCustom(cellData) {
     return (
         <div className='customItemsCell'>
             <div className='upper'>
@@ -13,4 +13,4 @@ function ItemCellCustom(cellData) {
     )
 }
 
-export default ItemCellCustom
+export default LeftItemCellCustom

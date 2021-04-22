@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Row, Col, Card} from 'react-bootstrap';
 import { TextBox, Button as TextBoxButton } from 'devextreme-react/text-box';
 
-function ScanSales() {
+function LeftScanSales() {
 
     return (
         <>
@@ -34,4 +34,4 @@ function ScanSales() {
 }
 
 const areEqual = (prevProps, nextProps) => true;
-export default React.memo(ScanSales, areEqual)
+export default React.memo(LeftScanSales, areEqual)

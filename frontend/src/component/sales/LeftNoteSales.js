@@ -4,7 +4,7 @@ import {Row, Col, Card} from 'react-bootstrap';
 import TextBox from 'devextreme-react/text-box';
 
 
-function NoteSales() {
+function LeftNoteSales() {
     return (
         <>
             <Card className={'mt-2 p-4 note-sales-card'}>
@@ -15,4 +15,4 @@ function NoteSales() {
 }
 
 const areEqual = (prevProps, nextProps) => true;
-export default React.memo(NoteSales, areEqual)
+export default React.memo(LeftNoteSales, areEqual)
