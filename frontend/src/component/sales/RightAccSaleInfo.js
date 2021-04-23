@@ -25,7 +25,7 @@ function RightAccSaleInfo({data}) {
             <Row className={'mb-2'}>
                 <Col>Date</Col>
                 <Col>
-                    <DateBox defaultValue={invDate} disabled={true} stylingMode={''} type="date" />
+                    <DateBox defaultValue={invDate} disabled={true} type="date" />
                 </Col>
             </Row>
             <Row className={'mb-2'}>

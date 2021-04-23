@@ -13,10 +13,10 @@ function RightSecSales() {
     const itemTemplate = (data) => {
         if(!data) return null;
         if(data.id === 1){
-            return( <div> <RightAccSaleInfo data={data} /> </div> )
+            return( <div className="component-right-sale"> <RightAccSaleInfo data={data} /> </div> )
         }
         else if(data.id === 2){
-            return( <div> <RightAccPaymentInfo data={data} /> </div> )
+            return( <div className="component-right-payment"> <RightAccPaymentInfo data={data} /> </div> )
         }
     }
 
@@ -26,12 +26,13 @@ function RightSecSales() {
 
     return (
         <div className={'right-section-sales'}>
-            <Card className={'mt-2 p-4 info-sales-card'}>
+            <Card className={'mt-2 p-2 info-sales-card noppading'}>
                 <Accordion
                     dataSource={dataInfo}
                     collapsible={true}
                     multiple={true}
                     animationDuration={380}
+                    style={{'border-radius':'5px'}}
                    // selectedItems={selected}
                    // onSelectionChanged={(e) => { selectionChanged(e) }}
                    // itemTitleRender={CustomTitle}

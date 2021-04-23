@@ -7,7 +7,7 @@ const initialState = {
     ],
     dataInfo: [
         {id: 1, title:'Sales Info', invno: 'inv02021', invdt:'02/02/2021', admin:'122334', customer:'6029f897c92f86247017e7e6'},
-        {id: 2, title:'Payment Info', subtotal:10000, disc:1000, addcharge:500, grandtotal:9500}
+        {id: 2, title:'Payment Info', subtotal:10000, disc:1000, addcharge:500, adddisc: 500, grandtotal:9000, cash:5000, changedue:4000, changeduetype:'due', transfer:4000}
     ]
 }
 
