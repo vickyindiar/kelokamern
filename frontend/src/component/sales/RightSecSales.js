@@ -20,8 +20,12 @@ function RightSecSales() {
         }
     }
 
+    const CustomTitle = (data) => {
+        return (<h4 className="accordion-sales-title">{data.title}</h4>)
+    }
+
     const selectionChanged = (e) => {
-        // setSelected()
+        debugger;
     }
 
     return (
@@ -29,13 +33,12 @@ function RightSecSales() {
             <Card className={'mt-2 p-2 info-sales-card noppading'}>
                 <Accordion
                     dataSource={dataInfo}
-                    collapsible={true}
-                    multiple={true}
+                    collapsible={false}
+                    multiple={false}
                     animationDuration={380}
-                    style={{'border-radius':'5px'}}
                    // selectedItems={selected}
-                   // onSelectionChanged={(e) => { selectionChanged(e) }}
-                   // itemTitleRender={CustomTitle}
+                  //  onSelectionChanged={selectionChanged}
+                   itemTitleRender={CustomTitle}
                    itemRender={itemTemplate}
                 />
             </Card>

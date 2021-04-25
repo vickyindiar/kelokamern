@@ -5,6 +5,7 @@ import FileUploader from 'devextreme-react/file-uploader';
 import { Item } from 'devextreme-react/form';
 import * as gConfig from './ConfigGrids';
 import { getProductSupport } from "../../services/actions/dataAction";
+import config from '../../config';
 
 function GridTable({tab, vref}) {
     const [selectionMode, setSelectionMode] = useState('single');
@@ -16,6 +17,7 @@ function GridTable({tab, vref}) {
     const [supplierDS, setSupplierDS] = useState(null);
     const dispatch = useDispatch();
     const refImageUploader = useRef(null);
+    const user = useSelector(s => s.auth.user); 
 
     useEffect(() => {
         getProductSupport().then((res) => {
@@ -28,6 +30,14 @@ function GridTable({tab, vref}) {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const imgCellRender = (e) => {
+        let token = localStorage.getItem('jwt');
+        token = token.replace('Bearer ', '');
+        return(
+            <img src={`${config.apiURL}upload${e.value}?token=${token}`} width={50} height={50}/>
+        )
+    }
 
     return (
          <DataGrid
@@ -111,7 +121,7 @@ function GridTable({tab, vref}) {
                  <Lookup dataSource={supplierDS} valueExpr="_id" displayExpr="name" />
             </Column>
             {/* <Column dataField="duedate" caption="DUE DATE" visible={true} dataType="date" format="dd/MM/yyyy" width={120} cssClass="row-vertical-align" /> */}
-            <Column dataField="image" caption="GAMBAR" visible={true}  cssClass="row-vertical-align" />
+            <Column dataField="image" caption="GAMBAR" visible={true}  cssClass="row-vertical-align" cellRender={imgCellRender} />
             <Column dataField="desc" caption="KET. " visible={true}  cssClass="row-vertical-align" />
             
     </DataGrid>  

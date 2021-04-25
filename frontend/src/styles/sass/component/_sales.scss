@@ -23,10 +23,16 @@
 #eAddPayment::after, #eCashValue::after {
     border-bottom: none !important;
 }
+.line-h-payment-info{
+    border-bottom: 3px rgba(116, 105, 105, 0.3) solid;
+    width: 100%;
+    margin: 0 0 20px 0;
+    //text-align: center;
+}
 
 .cash-due-box{
-    border-top: 2px rgba(73, 72, 72, 0.5) solid;
-    border-bottom: 2px rgba(73, 72, 72, 0.5)  solid;
+    border-top: 2px rgba(116, 105, 105, 0.3) solid;
+    border-bottom: 2px rgba(116, 105, 105, 0.3)  solid;
     width: 100%;
     height: 100%;
     margin: 0 3% 0 3%;
@@ -40,6 +46,7 @@
             >.dx-texteditor-input{
                 font-size: 6rem;
             }
+            
         }
     }
     .due-box{
@@ -48,6 +55,11 @@
         width: 49%;
         right: 0;
         top: 0;
+        .due-value{
+            font-size: 2.5rem !important;
+            color: rgba(202, 39, 39, 0.3);
+            text-align: center;
+        }
     }
     .middle-line{
         position: absolute;
@@ -57,4 +69,15 @@
         left: 50%;
         top: 0;
     }
+}
+
+#eCashValue > div > div.dx-texteditor-input-container > input{
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.accordion-sales-title{
+    // background-color: rgba(223, 32, 105, 0.5);
+    // border-radius: 5px;
+    // padding: 2px;
 }

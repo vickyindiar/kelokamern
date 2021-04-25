@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Row, Col} from 'react-bootstrap';
 import {Button, NumberBox} from 'devextreme-react';
+import {formatRupiah} from '../../services/helper/IDRFormat';
 
 function RightAccPaymentInfo({data}) {
     const [addcharge, setAddCharge] = useState(0); 
@@ -30,78 +31,88 @@ function RightAccPaymentInfo({data}) {
     }
     return (
         <>
-            <Row> <Col>SubTotal</Col> <Col>{data.subtotal}</Col> </Row>  
-            <div className={'line-h-paymeny-info'}></div>
-           <Row> <Col>Discount</Col> <Col>{data.disc}</Col> </Row> 
-            <div className={'line-h-paymeny-info'}></div> 
-             <Row> <Col>Additional Charge</Col> <Col>{data.addcharge}</Col> </Row>  
-            <div className={'line-h-paymeny-info'}></div>
-            <Row> <Col>Additional Discount</Col> <Col>{data.adddisc}</Col> </Row>  
-            <div className={'line-h-paymeny-info'}></div>
-            <Row> <Col>Total</Col> <Col>{data.grandtotal}</Col></Row> 
-            <Row>
+            <Row className='mb-2'> <Col>SubTotal</Col> <Col className="d-flex justify-content-end">{ formatRupiah(data.subtotal)}</Col> </Row>  
+            <div className={'line-h-payment-info'}></div>
+           <Row className='mb-2'> <Col>Discount</Col> <Col className="d-flex justify-content-end" >{formatRupiah(data.disc)}</Col> </Row> 
+            <div className={'line-h-payment-info'}></div> 
+             <Row className='mb-2'> <Col>Additional Charge</Col> <Col className="d-flex justify-content-end">{formatRupiah(data.addcharge)}</Col> </Row>  
+            <div className={'line-h-payment-info'}></div>
+            <Row className='mb-2'> <Col>Additional Discount</Col> <Col className="d-flex justify-content-end">{formatRupiah(data.adddisc)}</Col> </Row>  
+            <div className={'line-h-payment-info'}></div>
+            <Row className='mb-2'> <Col className="h5">TOTAL</Col> <Col  className="d-flex justify-content-end">{formatRupiah(data.grandtotal)}</Col></Row> 
+            <Row className="mb-2">
                 <div className={'cash-due-box'}>
                     <div className={'cash-box'}>
-                        <div className={'cash-label'}>Cash</div>
+                        <div className={'cash-label'}><strong>Cash (Rp.)</strong></div>
                         <div className={'cash-value'}>    
                             <NumberBox
                                 id={'eCashValue'}
                                 defaultValue={data.cash}
                                 min={0}
-                                height={'100px'}
-                                style={{'font-size':'5rem'}}
+                                height={'10vh'}
+                                style={{'fontSize':'2rem'}}
                                 showSpinButtons={true}
+                                format="#,##0"
                             />
                         </div>
                     </div>
                     <div className={'due-box'}>
-                        <div className={'due-label'}>Due</div>
-                        <div className={'due-value'}>{ data.changedue }</div>
+                        <div className={'due-label mb-2'}><strong>Due (Rp.)</strong></div>
+                        <div className={'due-value'}>{ formatRupiah(data.changedue, false) }</div>
                     </div>   
                     <div className={'middle-line'}></div>   
                 </div>
             </Row>
-            <Row>
-                <div className={'add-payment-label'}>Transfer</div>
-                <div className={'add-payment-value'}>
-                    <NumberBox
-                        id={'eAddPayment'}
-                        defaultValue={data.transfer}
-                        min={10}
-                        max={20}
-                        showSpinButtons={true}
-                    />
-                </div>
+            <Row className="mb-4">
+                <Col>
+                 <div className={'add-payment-label'}>Transfer</div>
+                </Col>
+                <Col className="d-flex justify-content-end">
+                    <div className={'add-payment-value'}>
+                        <NumberBox
+                            id={'eAddPayment'}
+                            defaultValue={data.transfer}
+                            min={10}
+                            max={20}
+                            showSpinButtons={true}
+                            format="Rp #,##0"
+                        />
+                    </div>
+                </Col>
+          
             </Row>
-            <Row>
-            <div className={'btn-add-payment'}> 
-                <Button
-                    id={'btnAddPayment'}
-                    icon={'plus'}
-                    type={'default'}
-                    hint={'Add Payment method'}
-                    onClick={() => {onAddPayment()}}
-                />
-            </div>
-            </Row>
-            <Row>
+     
+            <Row className="mb-2">
+            <Col className="d-flex justify-content-end">
+        
+           
+            </Col>
+            <Col className="d-flex justify-content-end">
             <div className='container-btn-cancel-payment'>
                 <Button
                  id={'btnCancelPayment'}
                  icon={'close'}
                  type={'danger'}
+                 text={'Cancel'}
                  onClick={() => { onCancelPayment() } }
+                 height={'50'}
+                 style={{'borderRadius':'10px', 'marginRight':'5px'}}
                 />
             </div>
-            <div className='container-btn-process-payment'>
+            <div className='container-btn-process-payment '>
                 <Button
                  id={'btnProcessPayment'}
                  icon={'chevrondoubleright'}
                  type={'success'}
+                 text={'Process'}
                  onClick={() => {onProcessPayment()}}
-                 
+                 height={'100%'}
+                 style={{'borderRadius':'10px'}}
                 />
             </div> 
+            </Col>
+    
+        
             </Row>
    
         </>

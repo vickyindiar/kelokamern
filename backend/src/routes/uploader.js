@@ -59,4 +59,20 @@ router.post('/', authValidation, upload.single('image'), (req, res) => {
 
 })
 
+
+const getImage = async(req, res) => {
+  let file = req.param.file;
+  
+  res.json(p);
+}
+
+router.get('/:file', authValidation, (req, res) => {
+//todo
+  const __dirname = path.resolve();
+  const __p =  path.join(__dirname,  'backend/uploads');
+  const __file = path.join(__p, req.params.file);
+
+  res.sendFile(__file);
+});
+
 export {router, removeFile}

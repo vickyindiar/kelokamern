@@ -2,9 +2,14 @@ import jwt from 'jsonwebtoken'
 import User from '../src/models/authModel.js'
 import Role from '../src/models/roleModel.js'
 
+
+
 const authValidation = async(req, res, next) => {
     let token;
     let authorization = req.headers.authorization;
+    if(!authorization){
+        authorization = req.query.token ? 'Bearer '+req.query.token : false; 
+    }
     if(authorization){
         try {
             token = authorization.split(' ')[1];
