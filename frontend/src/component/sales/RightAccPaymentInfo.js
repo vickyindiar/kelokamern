@@ -1,22 +1,40 @@
 import React, {useState} from 'react';
 import { Row, Col} from 'react-bootstrap';
+import { useDispatch, useSelector} from 'react-redux';
 import {Button, NumberBox} from 'devextreme-react';
 import {formatRupiah} from '../../services/helper/IDRFormat';
+import { changeCashValue, updateAddCharge, updateAddDisc  } from '../../services/actions/salesAction';
 
 function RightAccPaymentInfo({data}) {
-    const [addcharge, setAddCharge] = useState(0); 
-    const [addDisc, setAddDisc] = useState(0); 
+    const dsItems = useSelector(s => s.sales.dataItems);
+    const dsInfo = useSelector(s => s.sales.dataInfo);
+    const dispatch = useDispatch();
+    debugger;
     
     const calculateTotal = () => {
-        return(
-            <div>{Number(data.subtotal - data.disc + addcharge - addDisc) }</div>
-        )
+        return( <div>{Number(data.subTotal - data.disc + data.addCharge - data.addDisc) }</div> )
     }
 
     const CalculateDueChange = () => {
         return(
-            <div>{Number(data.grantotal - data.cash + addcharge - addDisc) }</div>
+            <div>{Number(data.grantotal - data.cash + data.addCharge - data.addDisc) }</div>
         )
+    }
+
+    const onChangedCash = (e) => {
+        dispatch(changeCashValue(e.value, dsItems, data));
+    }
+    const onChangedAddCharge = (e) => {
+        debugger;
+        dispatch(updateAddCharge(e.value, dsItems, data));
+    }
+
+    const onChangedAddDisc = (e) =>{
+        dispatch(updateAddDisc(e.value, dsItems, data));
+    }
+
+    const onTrfChanged = (e) => {
+        //
     }
 
     const onAddPayment = () =>{
@@ -31,15 +49,43 @@ function RightAccPaymentInfo({data}) {
     }
     return (
         <>
-            <Row className='mb-2'> <Col>SubTotal</Col> <Col className="d-flex justify-content-end">{ formatRupiah(data.subtotal)}</Col> </Row>  
+            <Row className='mb-2'> <Col>SubTotal</Col> <Col className="d-flex justify-content-end">{ formatRupiah(data.subTotal)}</Col> </Row>  
             <div className={'line-h-payment-info'}></div>
-           <Row className='mb-2'> <Col>Discount</Col> <Col className="d-flex justify-content-end" >{formatRupiah(data.disc)}</Col> </Row> 
+            <Row className='mb-2'> <Col>Discount</Col> <Col className="d-flex justify-content-end" >{formatRupiah(data.disc)}</Col> </Row> 
             <div className={'line-h-payment-info'}></div> 
-             <Row className='mb-2'> <Col>Additional Charge</Col> <Col className="d-flex justify-content-end">{formatRupiah(data.addcharge)}</Col> </Row>  
+            <Row className='mb-2'>
+                <Col>Additional Charge</Col>
+                <Col className="d-flex justify-content-end">
+                {/* formatRupiah(data.addCharge)} */}
+                <NumberBox
+                        id={'eAddCharge'}
+                        defaultValue={data.addCharge}
+                        min={0}
+                         style={{'fontSize':'2rem'}}
+                        showSpinButtons={false}
+                        format="Rp #,##0"
+                        onValueChanged ={onChangedAddCharge}
+                />
+                </Col> 
+            </Row>  
             <div className={'line-h-payment-info'}></div>
-            <Row className='mb-2'> <Col>Additional Discount</Col> <Col className="d-flex justify-content-end">{formatRupiah(data.adddisc)}</Col> </Row>  
+            <Row className='mb-2'> 
+                <Col>Additional Discount</Col>
+                <Col className="d-flex justify-content-end">
+                    {/* {formatRupiah(data.addDisc)} */}
+                    <NumberBox
+                        id={'eAddDisc'}
+                        defaultValue={data.addDisc}
+                        min={0}
+                        style={{'fontSize':'2rem'}}
+                        showSpinButtons={false}
+                        format="Rp #,##0"
+                        onValueChanged ={onChangedAddDisc}
+                    />
+                </Col> 
+            </Row>  
             <div className={'line-h-payment-info'}></div>
-            <Row className='mb-2'> <Col className="h5">TOTAL</Col> <Col  className="d-flex justify-content-end">{formatRupiah(data.grandtotal)}</Col></Row> 
+            <Row className='mb-2'> <Col className="h5">TOTAL</Col> <Col  className="d-flex justify-content-end">{formatRupiah(data.grandTotal)}</Col></Row> 
             <Row className="mb-2">
                 <div className={'cash-due-box'}>
                     <div className={'cash-box'}>
@@ -53,12 +99,13 @@ function RightAccPaymentInfo({data}) {
                                 style={{'fontSize':'2rem'}}
                                 showSpinButtons={true}
                                 format="#,##0"
+                                onValueChanged ={onChangedCash}
                             />
                         </div>
                     </div>
                     <div className={'due-box'}>
-                        <div className={'due-label mb-2'}><strong>Due (Rp.)</strong></div>
-                        <div className={'due-value'}>{ formatRupiah(data.changedue, false) }</div>
+                        <div className={'due-label mb-2'}><strong>{ data.changeDueType} (Rp.)</strong></div>
+                        <div className={'due-value'}>{ formatRupiah(data.changeDue, false) }</div>
                     </div>   
                     <div className={'middle-line'}></div>   
                 </div>
@@ -67,15 +114,15 @@ function RightAccPaymentInfo({data}) {
                 <Col>
                  <div className={'add-payment-label'}>Transfer</div>
                 </Col>
-                <Col className="d-flex justify-content-end">
+                <Col className="">
                     <div className={'add-payment-value'}>
                         <NumberBox
                             id={'eAddPayment'}
                             defaultValue={data.transfer}
-                            min={10}
-                            max={20}
-                            showSpinButtons={true}
+                            min={0}
+                            showSpinButtons={false}
                             format="Rp #,##0"
+                            onValueChanged = { onTrfChanged }
                         />
                     </div>
                 </Col>

@@ -15,12 +15,12 @@
 .info-sales-card{
     height: calc(90vh - 1rem);
 }
-.component-right-payment{
+.component-right-payment, .component-right-sales{
     font-family: 'Ubuntu', sans-serif !important;
     font-size: 1rem !important;
 }
 
-#eAddPayment::after, #eCashValue::after {
+#eAddCharge::after, #eAddDisc::after, #eAddPayment::after, #eCashValue::after {
     border-bottom: none !important;
 }
 .line-h-payment-info{
@@ -73,8 +73,24 @@
 
 #eCashValue > div > div.dx-texteditor-input-container > input{
     font-size: 2.5rem;
+    font-family: 'Ubuntu';
     text-align: center;
 }
+
+#eAddCharge, #eAddDisc, #eAddPayment 
+{ 
+    div {
+        div.dx-texteditor-input-container{
+            input{
+                font-size: 1rem;
+                font-family: 'Ubuntu';
+                text-align: right;
+            }
+        }
+    }
+}
+
+
 
 .accordion-sales-title{
     // background-color: rgba(223, 32, 105, 0.5);

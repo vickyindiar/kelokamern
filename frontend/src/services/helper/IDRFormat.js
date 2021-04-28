@@ -18,8 +18,8 @@ export const formatRupiah = (angka, prefix) => {
 
 	rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 
-    if (prefix === undefined) result = 'Rp. ' + rupiah
+    if (prefix === undefined) result = 'Rp ' + rupiah
     else if( prefix === false) result = rupiah
-    else result = 'Rp. ' + rupiah;
+    else result = 'Rp ' + rupiah;
 	return result;
 }

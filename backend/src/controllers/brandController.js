@@ -15,7 +15,6 @@ const getBrandById = async(req, res) => {
 }
 const createBrand = async (req, res, next) => {
     let {name, desc } = req.body;
-    debugger;
     const brand = new Brand({ name, desc });
 
     const postBrand = await brand.save()

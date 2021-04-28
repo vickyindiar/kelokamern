@@ -79,7 +79,7 @@ function LeftItemSales() {
                     editorOptions={{'showSpinButtons':true}} 
                     cellRender={customCellQty}/>
                 <Column dataField="disc" caption="Discount" visible={true}  cssClass="row-vertical-align" allowEditing={true} calculateDisplayValue={(e)=>{ return e.disc === 0 ? '' : e.disc  }  } />
-                <Column dataField="subtotal" caption="Sub Total" dataType='number'  visible={true}  cssClass="row-vertical-align" allowEditing={false}/>
+                <Column dataField="subTotal" caption="Sub Total" dataType='number'  visible={true}  cssClass="row-vertical-align" allowEditing={false}/>
 
             </DataGrid>  
 

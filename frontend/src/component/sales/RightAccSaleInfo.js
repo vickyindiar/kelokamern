@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DateBox, SelectBox } from 'devextreme-react';
 import { getData } from '../../services/actions/dataAction';
 import { CUSTOMER_TAB_INDEX, tab } from '../data/ConfigGrids';
+import  { updateSalesInfo } from '../../services/actions/salesAction';
 
 function RightAccSaleInfo({data}) {
-
     const [invDate, setInvDate] = useState(new Date());
     const customerDS = useSelector(s => s.data.dataCustomer); 
     const user = useSelector(s => s.auth.user);
@@ -15,6 +15,9 @@ function RightAccSaleInfo({data}) {
         dispatch(getData(CUSTOMER_TAB_INDEX));
     }, [])
 
+    const onChange = (e) => {
+        dispatch(updateSalesInfo(e.value, data))
+    }
 
     return (
         <div>
@@ -46,6 +49,7 @@ function RightAccSaleInfo({data}) {
                     minSearchLength={0}
                     showDataBeforeSearch={true} 
                     defaultValue={data.customer}
+                    onChange={onChange}
                 />
                 </Col>
             </Row>

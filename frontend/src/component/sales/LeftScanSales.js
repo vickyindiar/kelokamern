@@ -16,8 +16,6 @@ function LeftScanSales() {
     const [qtyDS, setQtyDS]= useState(null);
     const [gridBoxValue, setGridBoxValue] = useState('');
     const [isGridOpened, setIsGridOpened] = useState(false);
-    debugger;
-
     const dispatch = useDispatch();
 
     useEffect(() => {

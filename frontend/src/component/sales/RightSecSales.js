@@ -9,7 +9,7 @@ import RightAccPaymentInfo from './RightAccPaymentInfo';
 function RightSecSales() {
     const dataInfo = useSelector(s => s.sales.dataInfo)
     const [selected, setSelected] = useState(dataInfo[0]);
-
+    debugger;
     const itemTemplate = (data) => {
         if(!data) return null;
         if(data.id === 1){
@@ -25,7 +25,6 @@ function RightSecSales() {
     }
 
     const selectionChanged = (e) => {
-        debugger;
     }
 
     return (
