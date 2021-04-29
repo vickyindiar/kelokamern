@@ -9,7 +9,7 @@ function RightAccPaymentInfo({data}) {
     const dsItems = useSelector(s => s.sales.dataItems);
     const dsInfo = useSelector(s => s.sales.dataInfo);
     const dispatch = useDispatch();
-    debugger;
+    console.log('payment info')
     
     const calculateTotal = () => {
         return( <div>{Number(data.subTotal - data.disc + data.addCharge - data.addDisc) }</div> )
@@ -25,7 +25,7 @@ function RightAccPaymentInfo({data}) {
         dispatch(changeCashValue(e.value, dsItems, data));
     }
     const onChangedAddCharge = (e) => {
-        debugger;
+        console.log('addcharge')
         dispatch(updateAddCharge(e.value, dsItems, data));
     }
 
@@ -61,7 +61,7 @@ function RightAccPaymentInfo({data}) {
                         id={'eAddCharge'}
                         defaultValue={data.addCharge}
                         min={0}
-                         style={{'fontSize':'2rem'}}
+                        style={{'fontSize':'2rem'}}
                         showSpinButtons={false}
                         format="Rp #,##0"
                         onValueChanged ={onChangedAddCharge}
@@ -82,7 +82,7 @@ function RightAccPaymentInfo({data}) {
                         format="Rp #,##0"
                         onValueChanged ={onChangedAddDisc}
                     />
-                </Col> 
+                </Col>  
             </Row>  
             <div className={'line-h-payment-info'}></div>
             <Row className='mb-2'> <Col className="h5">TOTAL</Col> <Col  className="d-flex justify-content-end">{formatRupiah(data.grandTotal)}</Col></Row> 

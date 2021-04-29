@@ -49,11 +49,12 @@ export const updateSalesInfo = (newCustomer, dsSalesInfo) => dispatch => {
     dispatch({type: UPDATE_SALES_INFO, payload:{dataSales: newDsSales}});
 }
 
-export const updateAddCharge = (newAddCharge, dsItems, dsPayment) => dispatch => {
+export const updateAddCharge = (newAddCharge, dsItems, dsPayment) => async dispatch => {
     let newDsPayment = {...dsPayment};
     newDsPayment.addCharge = newAddCharge;
-    dispatch({type:UPDATE_PAYMENT_INFO, payload: { dataPayment : newDsPayment}});
-    dispatch(updatePaymentInfo(dsItems, dsPayment));
+    await dispatch({type:UPDATE_PAYMENT_INFO, payload: { dataPayment : newDsPayment}});
+    await dispatch(updatePaymentInfo(dsItems, dsPayment));
+    return true;
 }
 
 export const updateAddDisc = (newAddDisc, dsItems, dsPayment) => dispatch => {
@@ -77,6 +78,7 @@ const updatePaymentInfo = (dsItems, dsPayment) => dispatch => {
     newDsPayment.disc = disc;
     newDsPayment.grandTotal = grandTotal;
     dispatch({type:UPDATE_PAYMENT_INFO, payload: {dataPayment: newDsPayment } });
+    console.log('update payment');
 }
 
 export const changeCashValue = (newCashValue, dsItems, dsPayment) => dispatch => {
