@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import DataGrid, {Column, Selection, Grouping, GroupPanel, ColumnFixing, SearchPanel, Scrolling, LoadPanel, Editing, Popup, Position, Form } from 'devextreme-react/data-grid';
+import DataGrid, {Column, Selection, Grouping, GroupPanel, ColumnFixing, SearchPanel, Editing, Form } from 'devextreme-react/data-grid';
 import { Item } from 'devextreme-react/form';
 import * as gConfig from './ConfigGrids';
 

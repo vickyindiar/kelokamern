@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {Row, Col, Card} from 'react-bootstrap';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
+import {Card} from 'react-bootstrap';
 import Accordion from 'devextreme-react/accordion';
 import RightAccSaleInfo from './RightAccSaleInfo';
 import RightAccPaymentInfo from './RightAccPaymentInfo';

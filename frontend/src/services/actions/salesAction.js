@@ -21,7 +21,7 @@ export const addItems = (product, dsItems) => dispatch => {
     else newDsItems[codeIndex].qty = newDsItems[codeIndex].qty + 1; 
 
     dispatch({ type: UPDATE_ITEMS, payload: { dataItems : newDsItems}});
-} 
+}
 
 export const updateItemsQty = (newQty, code, dsItems) => dispatch => {
     let newDsItems = [...dsItems];
@@ -43,10 +43,63 @@ export const updateItemsDisc = (newDisc, code, dsItems) => dispatch => {
     dispatch({ type: UPDATE_ITEMS, payload: { dataItems : newDsItems}});
 }
 
+export const updateSalesNote = (newSelesNote) => dispatch => {
+    dispatch({type:UPDATE_SALES_NOTE, payload: newSelesNote});
+}
+
+
+//======== SALES INFO ============/
+
+const generateInvoiceNumber = (customer) => {
+    let rNumber = Math.floor(100000 + Math.random() * 90000); 
+    let now = new Date();
+    let result = 'INV-'+ rNumber.toString() + customer.substr(0, 4) + now.toString();  
+    return result;
+}
+
+export const updateAllSalesInfo = (dsItems, dsSalesInfo) => dispatch => {
+    // {id: 1, title:'Sales Info', invno: '', invdt:new Date(), admin:'', customer:''},
+    if(dsItems.length > 0){
+        const newDsSales = {
+            id: 1,
+            title: 'Sales Info',
+            invno: generateInvoiceNumber(dsSalesInfo.customer),
+            invdt: new Date(),
+            admin: dsSalesInfo.admin,
+            customer: dsSalesInfo.customer
+        }
+        dispatch({type:UPDATE_SALES_INFO, payload: { dataSales : newDsPayment }});
+    }
+}
+
 export const updateSalesInfo = (newCustomer, dsSalesInfo) => dispatch => {
     let newDsSales = {...dsSalesInfo};
     newDsSales.customer = newCustomer;
-    dispatch({type: UPDATE_SALES_INFO, payload:{dataSales: newDsSales}});
+    newDsSales.invno = generateInvoiceNumber(dsSalesInfo.customer)
+    dispatch({type: UPDATE_SALES_INFO, payload:{ dataSales: newDsSales }});
+}
+//===============================
+
+
+//======== PAYMENT INFO ===========/
+export const updateAllPaymentInfo = (dsItems, dsPayment) => dispatch => {
+    if(dsItems.length > 0){
+        const newDsPayment = dsItems.reduce((a, b) => {
+                return {
+                    id: 2,
+                    title:'Payment Info', 
+                    subTotal: a.price + b.price, 
+                    disc:a.disc+ b.disc, 
+                    addCharge:0,
+                    addDisc: 0,
+                    grandTotal:a.subTotal+b.subTotal,
+                    cash:0,
+                    changeDue:0,
+                    changeDueType:'change',
+                    transfer:0}
+        });
+        dispatch({type:UPDATE_PAYMENT_INFO, payload: { dataPayment : newDsPayment}});
+    }
 }
 
 export const updateAddCharge = (newAddCharge, dsItems, dsPayment) => async dispatch => {
@@ -57,15 +110,15 @@ export const updateAddCharge = (newAddCharge, dsItems, dsPayment) => async dispa
     return true;
 }
 
-export const updateAddDisc = (newAddDisc, dsItems, dsPayment) => dispatch => {
+export const updateAddDisc = (newAddDisc, dsItems, dsPayment) => async dispatch => {
     let newDsPayment = {...dsPayment};
     newDsPayment.addDisc = newAddDisc;
-    dispatch({type:UPDATE_PAYMENT_INFO, payload: { dataPayment : newDsPayment}});
-    dispatch(updatePaymentInfo(dsItems, dsPayment));
+    await dispatch({type:UPDATE_PAYMENT_INFO, payload: { dataPayment : newDsPayment}});
+    await dispatch(updatePaymentInfo(dsItems, dsPayment));
+    return true;
 }
 
 const updatePaymentInfo = (dsItems, dsPayment) => dispatch => {
-    debugger;
     let newDsPayment = {...dsPayment};
     let subTotal = 0, disc = 0, grandTotal = 0;
     dsItems.forEach(e => {
@@ -78,7 +131,6 @@ const updatePaymentInfo = (dsItems, dsPayment) => dispatch => {
     newDsPayment.disc = disc;
     newDsPayment.grandTotal = grandTotal;
     dispatch({type:UPDATE_PAYMENT_INFO, payload: {dataPayment: newDsPayment } });
-    console.log('update payment');
 }
 
 export const changeCashValue = (newCashValue, dsItems, dsPayment) => dispatch => {
@@ -97,7 +149,11 @@ export const changeCashValue = (newCashValue, dsItems, dsPayment) => dispatch =>
     dispatch({type:UPDATE_PAYMENT_INFO, payload: {dataPayment: newDsPayment } });
 }
 
+//================================
 
-export const updateSalesNote = (newSelesNote) => dispatch => {
-    dispatch({type:UPDATE_SALES_NOTE, payload: newSelesNote});
-}
+
+
+
+
+
+

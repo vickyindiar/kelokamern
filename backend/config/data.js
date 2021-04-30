@@ -148,29 +148,40 @@ const products = [
 
 const orders = [
     {
-        order_no:'8765HERM280121', /*rundom number 4 DIGIT +customer frist four +date +*/
+        order_no:'8765HERM280121', /*rundom number 4 DIGIT +customer first four + date +*/
         order_date:'2021-01-21',
         invoice:'INV-1HERM280121', /* INV - Generate digit + customer first four + date */
         customer:'hermione',
         user:'admin',
-        status:'lunas', 
-        method:'cash', 
-        dp:0,
-        stotal:0, 
-        due_date:null, 
-        shipping:0, 
-        others:'', 
-        gdisc:0, 
-        gtotal:50000 
+        stotal: 75000,
+        gdisc:1000, 
+        gtotal:74000 
     }
 ]
 
 const orderDetails = [
-    { order:'8765HERM280121', product:'SD', qty:2, qtytype:'lusin', disc:0, price:25000 }
+    { order_no:'8765HERM280121', product:'SD', qty:2, qtytype:'lusin', disc:0, price:25000, total:50000 },
+    { order_no:'8765HERM280121', product:'SMP', qty:1, qtytype:'lusin', disc:1000, price:25000, total: 24000 }
 ]
 
 const invoices = [
-    { invno:'INV-1HERM280121', invdate:'2021-01-21', note:'' }
+    { 
+      invoice_no:'INV-1HERM280121', 
+      invoice_date:'2021-01-21', 
+      customer:'hermione',
+      user:'admin',
+      status: 'lunas', //['paid', pending] = ['lunas', 'tunda']
+      due_date:null, // must be set if status = pending
+      payment:['cash', 'transfer'],
+      add_charge: 10000,
+      add_disc: 5000,
+      total: 74000,
+      gtotal: 79000,
+      cash: 50000,
+      transfer: 29000,
+      change_due:0,
+      note:'pengiriman: 10000' 
+    }
 ]
 
 export { roles, users, profiles, brands, categories, qtytypes,

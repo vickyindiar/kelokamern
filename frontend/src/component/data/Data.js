@@ -1,6 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {useSelector, useDispatch } from 'react-redux'
-import ToolsAction from './ToolsAction';
+import {useDispatch } from 'react-redux'
 import Header from '../template/Header';
 import TabPanel, {Item} from 'devextreme-react/tab-panel';
 import GridProduct from './GridProduct';

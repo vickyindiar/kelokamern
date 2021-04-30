@@ -1,6 +1,4 @@
 import React from 'react';
-import { Column, Lookup } from 'devextreme-react/data-grid';
-import isEmpty from '../../services/helper/isEmpty';
 import { storeData, updateData, deleteData } from "../../services/actions/dataAction";
 
 

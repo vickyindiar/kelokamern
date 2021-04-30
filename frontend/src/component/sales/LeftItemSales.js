@@ -52,8 +52,8 @@ function LeftItemSales() {
                     // onSelectionChanged= { (e) =>{} }  
                     // onInitNewRow={ (e) => {  }}
                     // onRowInserted = { (e) =>{}}
-                    // onRowUpdated = { (e) => { } }
-                    // onRowRemoving = { (e) => {  }}
+                     onRowUpdated = { (e) => {  } }
+                     onRowRemoving = { (e) => {  }}
                 > 
                 <Editing mode="cell" 
                     allowUpdating={true} 

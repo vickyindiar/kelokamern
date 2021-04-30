@@ -1,31 +1,33 @@
-import React, {useState} from 'react';
+import React, { useEffect} from 'react';
 import { Row, Col} from 'react-bootstrap';
 import { useDispatch, useSelector} from 'react-redux';
 import {Button, NumberBox} from 'devextreme-react';
 import {formatRupiah} from '../../services/helper/IDRFormat';
-import { changeCashValue, updateAddCharge, updateAddDisc  } from '../../services/actions/salesAction';
+import { changeCashValue,
+         updateAddCharge, 
+         updateAddDisc, 
+         updateAllPaymentInfo,
+         updateAllSalesInfo  } from '../../services/actions/salesAction';
 
 function RightAccPaymentInfo({data}) {
+
     const dsItems = useSelector(s => s.sales.dataItems);
     const dsInfo = useSelector(s => s.sales.dataInfo);
     const dispatch = useDispatch();
     console.log('payment info')
+
+    useEffect(() => {
+       if(dsItems.length > 0){
+        dispatch(updateAllSalesInfo(dsItems, data)); 
+        dispatch(updateAllPaymentInfo(dsItems, data));
+       }
+    }, [])
     
-    const calculateTotal = () => {
-        return( <div>{Number(data.subTotal - data.disc + data.addCharge - data.addDisc) }</div> )
-    }
-
-    const CalculateDueChange = () => {
-        return(
-            <div>{Number(data.grantotal - data.cash + data.addCharge - data.addDisc) }</div>
-        )
-    }
-
+    
     const onChangedCash = (e) => {
         dispatch(changeCashValue(e.value, dsItems, data));
     }
     const onChangedAddCharge = (e) => {
-        console.log('addcharge')
         dispatch(updateAddCharge(e.value, dsItems, data));
     }
 
