@@ -52,7 +52,7 @@ function LeftItemSales() {
                     // onSelectionChanged= { (e) =>{} }  
                     // onInitNewRow={ (e) => {  }}
                     // onRowInserted = { (e) =>{}}
-                     onRowUpdated = { (e) => {  } }
+                     onRowUpdated = { (e) => {  } } //todo
                      onRowRemoving = { (e) => {  }}
                 > 
                 <Editing mode="cell" 
@@ -63,7 +63,6 @@ function LeftItemSales() {
                 />
 
                 <GroupPanel visible={false} emptyPanelText={'Tarik kolom disini untuk menggabungkan Baris '} em />
-                {/* <Grouping autoExpandAll={expandMode} /> */}
                 <SearchPanel visible={false} highlightCaseSensitive={true} placeholder='  Cari disini..  '/>
                 <Selection mode={'single'} selectAllMode={'allPages'} showCheckBoxesMode={'always'} allowSelectAll={true} />
                 <ColumnFixing enabled={true} />  
